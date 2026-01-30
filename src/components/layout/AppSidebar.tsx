@@ -29,10 +29,10 @@ import {
   Users,
   Settings,
   LogOut,
-  Layers,
   ChevronUp,
   Shield,
 } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const mainNavItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -80,12 +80,10 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border">
         <Link to="/dashboard" className="flex items-center gap-3 px-2 py-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary">
-            <Layers className="h-4 w-4 text-primary-foreground" />
-          </div>
+          <img src={logo} alt="Codersmasher.ai" className="h-8 w-8 object-contain" />
           {!collapsed && (
             <span className="font-semibold text-sidebar-foreground">
-              ProjectFlow
+              Codersmasher.ai
             </span>
           )}
         </Link>

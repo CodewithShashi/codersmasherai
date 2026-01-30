@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Layers } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 export default function Auth() {
   const [isLoading, setIsLoading] = useState(false);
@@ -80,10 +81,8 @@ export default function Auth() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-subtle p-4">
       <div className="w-full max-w-md animate-scale-in">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-primary mb-4">
-            <Layers className="w-6 h-6 text-primary-foreground" />
-          </div>
-          <h1 className="text-2xl font-bold text-foreground">ProjectFlow</h1>
+          <img src={logo} alt="Codersmasher.ai" className="w-16 h-16 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-foreground">Codersmasher.ai</h1>
           <p className="text-muted-foreground mt-1">Manage your projects with ease</p>
         </div>
 
