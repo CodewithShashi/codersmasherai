@@ -215,7 +215,7 @@ export default function Projects() {
         {canCreateProjects && (
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button>
+              <Button variant="gradient">
                 <Plus className="h-4 w-4 mr-2" />
                 New Project
               </Button>
@@ -304,7 +304,7 @@ export default function Projects() {
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={isSubmitting}>
+                  <Button type="submit" variant="gradient" disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>
                         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
