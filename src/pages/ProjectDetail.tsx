@@ -285,6 +285,8 @@ export default function ProjectDetail() {
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
+      case "urgent":
+        return <Badge className="priority-urgent text-xs">Urgent</Badge>;
       case "high":
         return <Badge className="priority-high text-xs">High</Badge>;
       case "medium":
@@ -475,6 +477,7 @@ export default function ProjectDetail() {
                           <SelectItem value="low">Low</SelectItem>
                           <SelectItem value="medium">Medium</SelectItem>
                           <SelectItem value="high">High</SelectItem>
+                          <SelectItem value="urgent">Urgent</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

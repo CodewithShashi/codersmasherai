@@ -131,6 +131,8 @@ export default function Dashboard() {
 
   const getPriorityBadge = (priority: string) => {
     switch (priority) {
+      case "urgent":
+        return <Badge className="priority-urgent">Urgent</Badge>;
       case "high":
         return <Badge className="priority-high">High</Badge>;
       case "medium":
@@ -377,7 +379,9 @@ export default function Dashboard() {
                   <div className="flex items-center gap-3 min-w-0">
                     <div
                       className={`w-2 h-2 rounded-full flex-shrink-0 ${
-                        task.priority === "high"
+                        task.priority === "urgent"
+                          ? "bg-purple-500"
+                          : task.priority === "high"
                           ? "bg-red-500"
                           : task.priority === "medium"
                           ? "bg-amber-500"
