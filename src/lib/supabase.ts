@@ -6,7 +6,7 @@ export { supabase };
 export type AppRole = "admin" | "project_manager" | "team_member";
 export type ProjectStatus = "active" | "on_hold" | "completed";
 export type TaskStatus = "todo" | "in_progress" | "done";
-export type TaskPriority = "low" | "medium" | "high";
+export type TaskPriority = "low" | "medium" | "high" | "urgent";
 
 export interface Profile {
   id: string;
