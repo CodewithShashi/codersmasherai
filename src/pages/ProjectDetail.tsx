@@ -34,7 +34,6 @@ import {
   CalendarDays,
   MoreHorizontal,
   Trash2,
-  GripVertical,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -43,13 +42,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
+import { ClientManagement } from "@/components/ClientManagement";
+import { ExportReports } from "@/components/ExportReports";
 
 type TaskStatus = "todo" | "in_progress" | "done";
 
 export default function ProjectDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, isClient, canCreateProjects } = useAuth();
   const { toast } = useToast();
 
   const [project, setProject] = useState<Project | null>(null);
@@ -345,6 +346,11 @@ export default function ProjectDetail() {
         </div>
 
         <div className="flex gap-2">
+          <ExportReports project={project} tasks={tasks} />
+          
+          {!isClient && (
+            <>
+              <ClientManagement projectId={project.id} projectName={project.name} />
           <Dialog open={isMemberDialogOpen} onOpenChange={setIsMemberDialogOpen}>
             <DialogTrigger asChild>
               <Button variant="outline" size="sm">
@@ -536,6 +542,8 @@ export default function ProjectDetail() {
               </form>
             </DialogContent>
           </Dialog>
+            </>
+          )}
         </div>
       </div>
 
