@@ -44,6 +44,7 @@ import {
 import { format } from "date-fns";
 import { ClientManagement } from "@/components/ClientManagement";
 import { ExportReports } from "@/components/ExportReports";
+import { ProjectProgressCharts } from "@/components/ProjectProgressCharts";
 
 type TaskStatus = "todo" | "in_progress" | "done";
 
@@ -592,6 +593,9 @@ export default function ProjectDetail() {
           )}
         </div>
       </div>
+
+      {/* Progress Charts */}
+      <ProjectProgressCharts tasks={tasks} project={project} />
 
       {/* Kanban Board */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
