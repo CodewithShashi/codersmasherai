@@ -33,6 +33,7 @@ import {
   Shield,
 } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
 const mainNavItems = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
@@ -141,6 +142,11 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border">
+        {!collapsed && (
+          <div className="px-2 py-2 flex justify-center">
+            <ThemeSwitcher />
+          </div>
+        )}
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
