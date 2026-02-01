@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 export { supabase };
 
 // Types for our application
-export type AppRole = "admin" | "project_manager" | "team_member";
+export type AppRole = "admin" | "project_manager" | "team_member" | "client";
 export type ProjectStatus = "active" | "on_hold" | "completed";
 export type TaskStatus = "todo" | "in_progress" | "done";
 export type TaskPriority = "low" | "medium" | "high" | "urgent";

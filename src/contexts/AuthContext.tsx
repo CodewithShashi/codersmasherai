@@ -13,6 +13,7 @@ interface AuthContextType {
   signOut: () => Promise<void>;
   isAdmin: boolean;
   isProjectManager: boolean;
+  isClient: boolean;
   canCreateProjects: boolean;
 }
 
@@ -119,6 +120,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const isAdmin = role === "admin";
   const isProjectManager = role === "project_manager" || role === "admin";
+  const isClient = role === "client";
   const canCreateProjects = isAdmin || isProjectManager;
 
   return (
@@ -134,6 +136,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         signOut,
         isAdmin,
         isProjectManager,
+        isClient,
         canCreateProjects,
       }}
     >
