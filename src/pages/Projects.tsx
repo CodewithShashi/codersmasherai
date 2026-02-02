@@ -183,7 +183,7 @@ export default function Projects() {
       case "on_hold":
         return <Badge className="project-on-hold">On Hold</Badge>;
       case "completed":
-        return <Badge className="project-completed">Completed</Badge>;
+        return <Badge className="project-completed">Done</Badge>;
       default:
         return null;
     }
@@ -267,7 +267,7 @@ export default function Projects() {
                       <SelectContent>
                         <SelectItem value="active">Active</SelectItem>
                         <SelectItem value="on_hold">On Hold</SelectItem>
-                        <SelectItem value="completed">Completed</SelectItem>
+                        <SelectItem value="completed">Done</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -340,7 +340,7 @@ export default function Projects() {
             <SelectItem value="all">All Status</SelectItem>
             <SelectItem value="active">Active</SelectItem>
             <SelectItem value="on_hold">On Hold</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
+            <SelectItem value="completed">Done</SelectItem>
           </SelectContent>
         </Select>
       </div>
