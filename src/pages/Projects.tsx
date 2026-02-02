@@ -205,17 +205,17 @@ export default function Projects() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <div className="page-header mb-0">
-          <h1 className="page-title">Projects</h1>
-          <p className="page-description">Manage and track your team's projects</p>
+          <h1 className="page-title text-xl sm:text-2xl">Projects</h1>
+          <p className="page-description text-sm">Manage and track your team's projects</p>
         </div>
 
         {canCreateProjects && (
           <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
             <DialogTrigger asChild>
-              <Button variant="gradient">
+              <Button variant="gradient" className="w-full sm:w-auto">
                 <Plus className="h-4 w-4 mr-2" />
                 New Project
               </Button>
@@ -367,27 +367,27 @@ export default function Projects() {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
           {filteredProjects.map((project) => (
             <Card key={project.id} className="card-interactive group">
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
+              <CardHeader className="p-4 pb-3 sm:p-6 sm:pb-3">
+                <div className="flex items-start justify-between gap-2">
                   <Link
                     to={`/projects/${project.id}`}
                     className="flex-1 min-w-0"
                   >
-                    <CardTitle className="text-lg truncate hover:text-primary transition-colors">
+                    <CardTitle className="text-base sm:text-lg truncate hover:text-primary transition-colors">
                       {project.name}
                     </CardTitle>
                   </Link>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-1 sm:gap-2 shrink-0">
                     {getStatusBadge(project.status)}
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
                           variant="ghost"
                           size="icon"
-                          className="h-8 w-8 opacity-0 group-hover:opacity-100 transition-opacity"
+                          className="h-8 w-8 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity"
                         >
                           <MoreHorizontal className="h-4 w-4" />
                         </Button>
@@ -418,8 +418,8 @@ export default function Projects() {
                   </CardDescription>
                 )}
               </CardHeader>
-              <CardContent>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+              <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground">
                   {project.start_date && (
                     <div className="flex items-center gap-1">
                       <Calendar className="h-3.5 w-3.5" />
