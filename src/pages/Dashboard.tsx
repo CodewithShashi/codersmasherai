@@ -253,7 +253,7 @@ export default function Dashboard() {
             <CardTitle className="text-lg font-medium">Recent Projects</CardTitle>
             <div className="flex gap-2">
               {canCreateProjects && (
-                <Button asChild size="sm">
+                <Button asChild size="sm" variant="gradient">
                   <Link to="/projects/new">
                     <Plus className="h-4 w-4 mr-1" />
                     New
