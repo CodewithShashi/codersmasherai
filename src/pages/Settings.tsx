@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
@@ -8,13 +8,84 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, User, Shield } from "lucide-react";
+import { Loader2, User, Shield, Camera } from "lucide-react";
 
 export default function Settings() {
-  const { profile, role, user } = useAuth();
+  const { profile, role, user, refreshProfile } = useAuth();
   const { toast } = useToast();
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
   const [fullName, setFullName] = useState(profile?.full_name ?? "");
+  const [avatarUrl, setAvatarUrl] = useState(profile?.avatar_url ?? "");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const handleAvatarUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      toast({
+        title: "Invalid file type",
+        description: "Please select an image file.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      toast({
+        title: "File too large",
+        description: "Please select an image under 2MB.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsUploadingAvatar(true);
+    try {
+      const fileExt = file.name.split('.').pop();
+      const filePath = `${user.id}/avatar.${fileExt}`;
+
+      // Upload to storage
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: urlData } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath);
+
+      const newAvatarUrl = `${urlData.publicUrl}?t=${Date.now()}`;
+
+      // Update profile
+      const { error: updateError } = await supabase
+        .from("profiles")
+        .update({ avatar_url: newAvatarUrl })
+        .eq("id", user.id);
+
+      if (updateError) throw updateError;
+
+      setAvatarUrl(newAvatarUrl);
+      await refreshProfile();
+
+      toast({
+        title: "Avatar updated",
+        description: "Your profile picture has been updated.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error uploading avatar",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploadingAvatar(false);
+    }
+  };
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,6 +99,8 @@ export default function Settings() {
         .eq("id", user.id);
 
       if (error) throw error;
+
+      await refreshProfile();
 
       toast({
         title: "Profile updated",
@@ -81,15 +154,39 @@ export default function Settings() {
         <CardContent>
           <form onSubmit={handleUpdateProfile} className="space-y-6">
             <div className="flex items-center gap-6">
-              <Avatar className="h-20 w-20">
-                <AvatarImage src={profile?.avatar_url ?? undefined} />
-                <AvatarFallback className="bg-primary/10 text-primary text-xl">
-                  {getInitials(profile?.full_name ?? null, profile?.email ?? "")}
-                </AvatarFallback>
-              </Avatar>
+              <div className="relative">
+                <Avatar className="h-20 w-20">
+                  <AvatarImage src={avatarUrl || profile?.avatar_url || undefined} />
+                  <AvatarFallback className="bg-primary/10 text-primary text-xl">
+                    {getInitials(profile?.full_name ?? null, profile?.email ?? "")}
+                  </AvatarFallback>
+                </Avatar>
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploadingAvatar}
+                  className="absolute -bottom-1 -right-1 p-1.5 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50"
+                >
+                  {isUploadingAvatar ? (
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                  ) : (
+                    <Camera className="h-3.5 w-3.5" />
+                  )}
+                </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleAvatarUpload}
+                  className="hidden"
+                />
+              </div>
               <div>
                 <h3 className="font-medium">{profile?.full_name || "Unnamed User"}</h3>
                 <p className="text-sm text-muted-foreground">{profile?.email}</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Click the camera icon to change your photo
+                </p>
               </div>
             </div>
 
