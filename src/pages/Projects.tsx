@@ -40,6 +40,7 @@ import {
   MoreHorizontal,
   Trash2,
   Edit,
+  RefreshCw,
 } from "lucide-react";
 import {
   DropdownMenu,
@@ -141,6 +142,33 @@ export default function Projects() {
       });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleStatusChange = async (projectId: string, projectName: string, newStatus: "active" | "on_hold" | "completed") => {
+    try {
+      const { error } = await supabase
+        .from("projects")
+        .update({ status: newStatus })
+        .eq("id", projectId);
+
+      if (error) throw error;
+
+      setProjects(projects.map((p) => 
+        p.id === projectId ? { ...p, status: newStatus } : p
+      ));
+
+      const statusLabels = { active: "Active", on_hold: "On Hold", completed: "Done" };
+      toast({
+        title: "Status updated",
+        description: `${projectName} is now ${statusLabels[newStatus]}.`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Error updating status",
+        description: error.message,
+        variant: "destructive",
+      });
     }
   };
 
@@ -399,6 +427,30 @@ export default function Projects() {
                             Edit
                           </Link>
                         </DropdownMenuItem>
+                        {project.status !== "active" && (
+                          <DropdownMenuItem
+                            onClick={() => handleStatusChange(project.id, project.name, "active")}
+                          >
+                            <RefreshCw className="h-4 w-4 mr-2" />
+                            Set Active
+                          </DropdownMenuItem>
+                        )}
+                        {project.status !== "on_hold" && (
+                          <DropdownMenuItem
+                            onClick={() => handleStatusChange(project.id, project.name, "on_hold")}
+                          >
+                            <RefreshCw className="h-4 w-4 mr-2" />
+                            Set On Hold
+                          </DropdownMenuItem>
+                        )}
+                        {project.status !== "completed" && (
+                          <DropdownMenuItem
+                            onClick={() => handleStatusChange(project.id, project.name, "completed")}
+                          >
+                            <RefreshCw className="h-4 w-4 mr-2" />
+                            Set Done
+                          </DropdownMenuItem>
+                        )}
                         <DropdownMenuItem
                           className="text-destructive focus:text-destructive"
                           onClick={() =>
