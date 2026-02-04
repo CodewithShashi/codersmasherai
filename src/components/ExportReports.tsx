@@ -55,9 +55,9 @@ export function ExportReports({ project, tasks }: ExportReportsProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" disabled={exporting}>
-          <Download className="h-4 w-4 mr-2" />
-          Export
+        <Button variant="outline" size="sm" disabled={exporting} className="text-xs sm:text-sm">
+          <Download className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline">Export</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">

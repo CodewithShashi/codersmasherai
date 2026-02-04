@@ -77,13 +77,13 @@ export function ProjectProgressCharts({ tasks, project }: ProjectProgressChartsP
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
       {/* Completion Progress */}
       <Card>
-        <CardHeader className="pb-2">
+        <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-2">
           <CardTitle className="text-sm font-medium">Completion</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
           <div className="flex flex-col items-center">
             <div className="relative w-32 h-32">
               <ResponsiveContainer width="100%" height="100%">
@@ -124,11 +124,11 @@ export function ProjectProgressCharts({ tasks, project }: ProjectProgressChartsP
 
       {/* Status Distribution */}
       <Card>
-        <CardHeader className="pb-2">
+        <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-2">
           <CardTitle className="text-sm font-medium">By Status</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="h-32">
+        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <div className="h-28 sm:h-32">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
@@ -166,11 +166,11 @@ export function ProjectProgressCharts({ tasks, project }: ProjectProgressChartsP
 
       {/* Priority Distribution */}
       <Card>
-        <CardHeader className="pb-2">
+        <CardHeader className="p-4 pb-2 sm:p-6 sm:pb-2">
           <CardTitle className="text-sm font-medium">By Priority</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="h-32">
+        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <div className="h-28 sm:h-32">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={priorityData} layout="vertical">
                 <XAxis type="number" hide />

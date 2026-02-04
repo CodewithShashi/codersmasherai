@@ -329,9 +329,9 @@ export default function ProjectDetail() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+      <div className="flex flex-col gap-3 sm:gap-4">
         <div>
           <Link
             to="/projects"
@@ -340,13 +340,13 @@ export default function ProjectDetail() {
             <ArrowLeft className="h-4 w-4 mr-1" />
             Back to Projects
           </Link>
-          <h1 className="text-2xl font-bold text-foreground">{project.name}</h1>
+          <h1 className="text-xl sm:text-2xl font-bold text-foreground">{project.name}</h1>
           {project.description && (
-            <p className="text-muted-foreground mt-1">{project.description}</p>
+            <p className="text-sm text-muted-foreground mt-1">{project.description}</p>
           )}
         </div>
 
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <ExportReports project={project} tasks={tasks} />
           
           {!isClient && (
@@ -354,9 +354,9 @@ export default function ProjectDetail() {
               <ClientManagement projectId={project.id} projectName={project.name} />
           <Dialog open={isMemberDialogOpen} onOpenChange={setIsMemberDialogOpen}>
             <DialogTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Users className="h-4 w-4 mr-2" />
-                Manage Team
+              <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+                <Users className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Manage Team</span>
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -430,9 +430,9 @@ export default function ProjectDetail() {
 
           <Dialog open={isTaskDialogOpen} onOpenChange={setIsTaskDialogOpen}>
             <DialogTrigger asChild>
-              <Button size="sm">
-                <Plus className="h-4 w-4 mr-2" />
-                Add Task
+              <Button size="sm" className="text-xs sm:text-sm">
+                <Plus className="h-4 w-4 sm:mr-2" />
+                <span className="hidden sm:inline">Add Task</span>
               </Button>
             </DialogTrigger>
             <DialogContent>
@@ -549,7 +549,7 @@ export default function ProjectDetail() {
       </div>
 
       {/* Project Info */}
-      <div className="flex flex-wrap items-center gap-4">
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4">
         <Badge
           className={
             project.status === "active"
@@ -562,8 +562,8 @@ export default function ProjectDetail() {
           {project.status.replace("_", " ")}
         </Badge>
         {project.start_date && (
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <CalendarDays className="h-4 w-4" />
+          <div className="flex items-center gap-1 text-xs sm:text-sm text-muted-foreground">
+            <CalendarDays className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
             <span>
               {format(new Date(project.start_date), "MMM d, yyyy")}
               {project.end_date && (
@@ -575,9 +575,9 @@ export default function ProjectDetail() {
         <div className="flex items-center gap-1">
           <div className="avatar-stack">
             {members.slice(0, 3).map((member) => (
-              <Avatar key={member.id} className="h-6 w-6 border-2 border-background">
+              <Avatar key={member.id} className="h-5 w-5 sm:h-6 sm:w-6 border-2 border-background">
                 <AvatarImage src={member.profile?.avatar_url ?? undefined} />
-                <AvatarFallback className="bg-primary/10 text-primary text-xs">
+                <AvatarFallback className="bg-primary/10 text-primary text-[10px] sm:text-xs">
                   {getInitials(
                     member.profile?.full_name ?? null,
                     member.profile?.email ?? ""
@@ -587,7 +587,7 @@ export default function ProjectDetail() {
             ))}
           </div>
           {members.length > 3 && (
-            <span className="text-sm text-muted-foreground ml-1">
+            <span className="text-xs sm:text-sm text-muted-foreground ml-1">
               +{members.length - 3} more
             </span>
           )}
