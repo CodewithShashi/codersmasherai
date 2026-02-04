@@ -154,9 +154,9 @@ export function ClientManagement({ projectId, projectName }: ClientManagementPro
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Eye className="h-4 w-4 mr-2" />
-          Client Access
+        <Button variant="outline" size="sm" className="text-xs sm:text-sm">
+          <Eye className="h-4 w-4 sm:mr-2" />
+          <span className="hidden sm:inline">Client Access</span>
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-md">
