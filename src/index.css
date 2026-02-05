@@ -388,6 +388,13 @@
     @apply bg-background/80 backdrop-blur-sm;
   }
 
+  /* AI Assistant glassmorphism */
+  .ai-glass {
+    @apply bg-card/95 backdrop-blur-xl;
+    box-shadow: 0 25px 50px -12px hsl(var(--primary) / 0.25), 
+                0 0 0 1px hsl(var(--border) / 0.5);
+  }
+
   /* Truncate with ellipsis */
   .truncate-2 {
     display: -webkit-box;

@@ -4,7 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { AppSidebar } from "./AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Loader2 } from "lucide-react";
-
+import { AIAssistantWidget } from "@/components/ai-assistant";
 interface AppLayoutProps {
   children: ReactNode;
 }
@@ -39,6 +39,9 @@ export function AppLayout({ children }: AppLayoutProps) {
           </main>
         </div>
       </div>
+      
+      {/* AI Assistant Widget - Floating */}
+      <AIAssistantWidget />
     </SidebarProvider>
   );
 }
