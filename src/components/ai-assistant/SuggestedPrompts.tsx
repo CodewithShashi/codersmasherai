@@ -53,11 +53,11 @@ export function SuggestedPrompts({ onSelect }: SuggestedPromptsProps) {
           key={suggestion.label}
           variant="outline"
           size="sm"
-          className="h-auto py-3 px-3 flex flex-col items-start gap-1.5 text-left hover:bg-primary/5 hover:border-primary/30 transition-colors"
+          className="h-auto py-3 px-3 flex flex-col items-start gap-1.5 text-left hover:bg-primary/5 hover:border-primary/30 focus:bg-primary/10 focus:text-foreground active:text-foreground transition-colors"
           onClick={() => onSelect(suggestion.prompt)}
         >
           <suggestion.icon className="h-4 w-4 text-primary" />
-          <span className="text-xs font-medium">{suggestion.label}</span>
+          <span className="text-xs font-medium text-foreground">{suggestion.label}</span>
         </Button>
       ))}
     </div>
