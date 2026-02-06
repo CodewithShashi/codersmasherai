@@ -52,14 +52,14 @@
     --info: 217 91% 60%;
     --info-foreground: 0 0% 100%;
 
-    /* Sidebar */
-    --sidebar-background: 0 0% 100%;
+    /* Sidebar - Subtle teal tint for cohesive feel */
+    --sidebar-background: 168 30% 98%;
     --sidebar-foreground: 222 47% 11%;
     --sidebar-primary: 168 76% 42%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 168 84% 93%;
-    --sidebar-accent-foreground: 222 47% 11%;
-    --sidebar-border: 214 32% 91%;
+    --sidebar-accent: 168 50% 92%;
+    --sidebar-accent-foreground: 168 76% 30%;
+    --sidebar-border: 168 20% 90%;
     --sidebar-ring: 168 76% 42%;
 
     /* Gradients - Teal × Cyan */
@@ -136,14 +136,14 @@
     --info: 217 91% 60%;
     --info-foreground: 0 0% 100%;
 
-    /* Sidebar */
-    --sidebar-background: 222 47% 2%;
-    --sidebar-foreground: 214 32% 91%;
+    /* Sidebar - Elevated dark panel with teal accent */
+    --sidebar-background: 220 40% 6%;
+    --sidebar-foreground: 210 20% 90%;
     --sidebar-primary: 168 76% 52%;
     --sidebar-primary-foreground: 222 47% 11%;
-    --sidebar-accent: 168 40% 15%;
-    --sidebar-accent-foreground: 168 76% 52%;
-    --sidebar-border: 222 30% 15%;
+    --sidebar-accent: 168 35% 18%;
+    --sidebar-accent-foreground: 168 76% 70%;
+    --sidebar-border: 220 30% 12%;
     --sidebar-ring: 168 76% 52%;
 
     /* Gradients */
