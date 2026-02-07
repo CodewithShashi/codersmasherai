@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase, Profile, UserRole, AppRole } from "@/lib/supabase";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -60,49 +60,58 @@ export default function Team() {
     }
   };
 
-  const handleRoleChange = async (userId: string, newRole: AppRole) => {
+  const [isPending, startTransition] = useTransition();
+
+  const handleRoleChange = (userId: string, newRole: AppRole) => {
     if (!isAdmin) return;
 
-    try {
-      // Check if user already has a role
-      const { data: existingRole } = await supabase
-        .from("user_roles")
-        .select("*")
-        .eq("user_id", userId)
-        .single();
+    // Optimistically update UI first to prevent INP issues
+    setMembers(
+      members.map((m) =>
+        m.profile.id === userId ? { ...m, role: { ...m.role, role: newRole } } : m
+      )
+    );
 
-      if (existingRole) {
-        const { error } = await supabase
-          .from("user_roles")
-          .update({ role: newRole })
-          .eq("user_id", userId);
+    // Then perform the async database update
+    startTransition(() => {
+      (async () => {
+        try {
+          const { data: existingRole } = await supabase
+            .from("user_roles")
+            .select("*")
+            .eq("user_id", userId)
+            .single();
 
-        if (error) throw error;
-      } else {
-        const { error } = await supabase
-          .from("user_roles")
-          .insert({ user_id: userId, role: newRole });
+          if (existingRole) {
+            const { error } = await supabase
+              .from("user_roles")
+              .update({ role: newRole })
+              .eq("user_id", userId);
 
-        if (error) throw error;
-      }
+            if (error) throw error;
+          } else {
+            const { error } = await supabase
+              .from("user_roles")
+              .insert({ user_id: userId, role: newRole });
 
-      setMembers(
-        members.map((m) =>
-          m.profile.id === userId ? { ...m, role: { ...m.role, role: newRole } } : m
-        )
-      );
+            if (error) throw error;
+          }
 
-      toast({
-        title: "Role updated",
-        description: "Team member's role has been updated.",
-      });
-    } catch (error: any) {
-      toast({
-        title: "Error updating role",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
+          toast({
+            title: "Role updated",
+            description: "Team member's role has been updated.",
+          });
+        } catch (error: any) {
+          // Revert on error
+          fetchTeamMembers();
+          toast({
+            title: "Error updating role",
+            description: error.message,
+            variant: "destructive",
+          });
+        }
+      })();
+    });
   };
 
   const getInitials = (name: string | null, email: string) => {
