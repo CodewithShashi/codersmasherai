@@ -248,6 +248,7 @@ export default function Team() {
                             <SelectItem value="project_manager">
                               Project Manager
                             </SelectItem>
+                            <SelectItem value="team_member">Team Member</SelectItem>
                           </SelectContent>
                         </Select>
                       ) : (
